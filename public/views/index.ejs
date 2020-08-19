@@ -1,0 +1,38 @@
+<!-- views/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Reviews</title>
+    <link rel="stylesheet" href="/style/style.css">
+</head>
+<body>
+    <h1><%= title %></h1>
+    <div class="book-form">
+        <h2>Add Book Infomation</h2>
+        <form action="/" method="POST" autocomplete="off">
+            <div class="form-control">
+                <label for="title">Title</label>
+                <input type="text" name="title">
+            </div>
+            <div class="form-control">
+                <label for="text">Author</label>
+                <input type="text" name="author">
+            </div>
+            <button class="btn" type="submit" value = 'kensaku'>Submit</button>
+        </form>
+    </div>
+    <div class="book-list">
+        <h2>Book List</h2>
+        <article>
+              <!-- booksで受け取ったデータをfor文で回す-->
+              <!-- booksに複数のデータがある場合、データがすべて読み込むまで繰り返し表示する -->
+            <% for (let book of books) { %>
+                <h3><%= book.title %></h3>
+                <p><%= book.author %> </p>
+            <% } %>
+        </article>
+    </div>
+</body>
+</html>
