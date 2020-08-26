@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>サンプル</title>
+    <meta charset="utf-8">
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script> -->
+
+    <style>
+    div#filter{
+      margin-left: auto;
+      margin-right: auto;
+      width: 80%;
+    }
+    input#mylist {
+      background-position: 10px 10px;
+      background-repeat: no-repeat;
+      width: 30%;
+      font-size: 16px;
+      /* padding: 12px 20px 12px 40px;
+      border: 1px solid #ddd;
+      margin-bottom: 12px; */
+    }
+    div#header{
+      height: 100px;
+    }
+    button#new{
+      align-items: center;
+    }
+    th{
+      background: #eee;
+    }
+    th,td {
+      border: solid 1px;
+      width:auto;;
+    }
+    tr:hover{
+      background-color: yellow;
+    }
+   .maintable{
+     margin-left: auto;
+     margin-right: auto;
+      border: solid 1px;
+      border-collapse:  collapse;
+      white-space: nowrap;
+      width: 80%;
+    }
+    footer{
+      position: fixed;
+      width: 100%;
+      background-color: #C0C0C0;
+      padding: 15px 0;
+      bottom: 0; /*下に固定*/
+    }
+    div#paging
+    {
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      right:45%;
+    }
+    </style>
+  </head>
+
+  <body>
+    <div id = 'header'>
+
+    </div>
+    <div id = 'filter'>
+      <select name="category">
+      <option value="name">name</option>
+      <option value="country">country</option>
+      <option value="gender">gender</option>
+      </select>
+      検索：<input id="mylist" onchange="draw()" class='form-control'>
+    </div>
+    <button id="new" type="button">新規</button>
+    <!--テーブル生成位置-->
+    <div id ='maintable' ></div>
+    <!--ページングボタン配置-->
+    <footer>
+      <div id="paging">
+        <button id="prevbtn" type="button" onclick="prevbtn()"><</button>
+        <span id="currentpage">currentpage</span> / <span id="lastpage">lastpage</span>
+        <button id="nextbtn" type="button"onclick="nextbtn()">></button>
+      </div>
+    </footer>
+    <!-- //tableを用意 -->
+    <script language="javascript" type="text/javascript">
+      // table生成
+      var table = document.createElement('table');
+      table.className = "maintable"
+      var tr = document.createElement('tr');
+      var th1 = document.createElement('th');
+      var th2 = document.createElement('th');
+      var th3 = document.createElement('th');
+      th1.textContent = 'name';
+      th2.textContent = 'country';
+      th3.textContent = 'gender';
+      th1.style = 'width:40%;';
+      th1.style = 'width:30%;';
+      th1.style = 'width:30%;';
+      tr.appendChild(th1);
+      tr.appendChild(th2);
+      tr.appendChild(th3);
+      table.appendChild(tr);
+
+      var tr = document.createElement('tr');
+      var td = document.createElement('td');
+      td.textContent = '鈴木 一郎';
+      tr.appendChild(td);
+      var td = document.createElement('td');
+      td.textContent = 'Japan';
+      tr.appendChild(td);
+      var td = document.createElement('td');
+      td.textContent = 'male';
+      tr.appendChild(td);
+      table.appendChild(tr);
+
+      var tr = document.createElement('tr');
+      var td = document.createElement('td');
+      td.textContent = '佐藤 次郎';
+      tr.appendChild(td);
+      var td = document.createElement('td');
+      td.textContent = 'Japan';
+      tr.appendChild(td);
+      var td = document.createElement('td');
+      td.textContent = 'male';
+      tr.appendChild(td);
+      table.appendChild(tr);
+
+      var tr = document.createElement('tr');
+      var td = document.createElement('td');
+      td.textContent = '田中 花子';
+      tr.appendChild(td);
+      var td = document.createElement('td');
+      td.textContent = 'Japan';
+      tr.appendChild(td);
+      var td = document.createElement('td');
+      td.textContent = 'female';
+      tr.appendChild(td);
+      table.appendChild(tr);
+
+      var tr = document.createElement('tr');
+      var td = document.createElement('td');
+      td.textContent = '前川 雄二';
+      tr.appendChild(td);
+      var td = document.createElement('td');
+      td.textContent = 'Japan';
+      tr.appendChild(td);
+      var td = document.createElement('td');
+      td.textContent = 'male';
+      tr.appendChild(td);
+      table.appendChild(tr);
+
+      var tr = document.createElement('tr');
+      var td = document.createElement('td');
+      td.textContent = 'jhon Smith';
+      tr.appendChild(td);
+      var td = document.createElement('td');
+      td.textContent = 'America';
+      tr.appendChild(td);
+      var td = document.createElement('td');
+      td.textContent = 'male';
+      tr.appendChild(td);
+      table.appendChild(tr);
+
+      var tr = document.createElement('tr');
+      var td = document.createElement('td');
+      td.textContent = 'Kitty Williams';
+      tr.appendChild(td);
+      var td = document.createElement('td');
+      td.textContent = 'America';
+      tr.appendChild(td);
+      var td = document.createElement('td');
+      td.textContent = 'female';
+      tr.appendChild(td);
+      table.appendChild(tr);
+
+      document.getElementById('maintable').appendChild(table);
+    </script>
+    <!-- 検索機能 -->
+    <script language="javascript" type="text/javascript">
+    var page = 1;
+    var displayrows = 2;// １ページ当たり表示する行の数(後でGUIオブジェクトを追加してもよい)
+
+    function draw() {
+
+      var input, filter, table, tr, td, i;
+      input = document.getElementById("mylist");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("maintable");
+      tr = table.getElementsByTagName("tr");
+      lastpage.innerHTML= (tr.length - 1) / displayrows;
+      currentpage.innerHTML=page;
+      var viewcnt = displayrows;
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          if (td.innerHTML.toUpperCase().indexOf(filter) > -1 && viewcnt > 0 && i > (page-1)*displayrows) {
+            tr[i].style.display = "";
+            viewcnt --;
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+    function prevbtn(){
+      if (page > 1) {
+        page--;
+        draw();
+      }    }
+    function nextbtn(){
+      table = document.getElementById("maintable");
+      tr = table.getElementsByTagName("tr");
+      if (page < (tr.length - 1) /displayrows) {
+        page++;
+        draw();
+      }
+    }
+    window.onload = draw();
+    </script>
+  </body>
+</html>
