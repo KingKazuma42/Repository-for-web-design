@@ -4,7 +4,6 @@
     <title>サンプル</title>
     <meta charset="utf-8">
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script> -->
-
     <style>
     div#filter{
       margin-left: auto;
@@ -36,13 +35,18 @@
     tr:hover{
       background-color: yellow;
     }
-   .maintable{
-     margin-left: auto;
-     margin-right: auto;
-      border: solid 1px;
-      border-collapse:  collapse;
-      white-space: nowrap;
+   div#tablespace{
+     background-color: yellow;
       width: 80%;
+    }
+    .maintable{
+      border: solid 1px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 80%;
+      border-collapse:collapse;
+      white-space: nowrap;
+
     }
     footer{
       position: fixed;
@@ -58,13 +62,14 @@
       bottom: 0;
       right:45%;
     }
+
     </style>
   </head>
-
   <body>
     <div id = 'header'>
 
     </div>
+
     <div id = 'filter'>
       <select name="category">
       <option value="name">name</option>
@@ -73,150 +78,168 @@
       </select>
       検索：<input id="mylist" onchange="draw()" class='form-control'>
     </div>
+
     <button id="new" type="button">新規</button>
+
     <!--テーブル生成位置-->
-    <div id ='maintable' ></div>
-    <!--ページングボタン配置-->
-    <footer>
-      <div id="paging">
-        <button id="prevbtn" type="button" onclick="prevbtn()"><</button>
-        <span id="currentpage">currentpage</span> / <span id="lastpage">lastpage</span>
-        <button id="nextbtn" type="button"onclick="nextbtn()">></button>
-      </div>
-    </footer>
+    <div id ='maintable'>
+
     <!-- //tableを用意 -->
     <script language="javascript" type="text/javascript">
       // table生成
       var table = document.createElement('table');
-      table.className = "maintable"
-      var tr = document.createElement('tr');
-      var th1 = document.createElement('th');
-      var th2 = document.createElement('th');
-      var th3 = document.createElement('th');
-      th1.textContent = 'name';
-      th2.textContent = 'country';
-      th3.textContent = 'gender';
-      th1.style = 'width:40%;';
-      th1.style = 'width:30%;';
-      th1.style = 'width:30%;';
-      tr.appendChild(th1);
-      tr.appendChild(th2);
-      tr.appendChild(th3);
-      table.appendChild(tr);
+      table.id = 'table';
+      table.className = "maintable";
+      //test用のテーブル生成。本実装ではDBから取得する。
+      var thead = document.createElement('thead');
+        var tr = document.createElement('tr');
+        var th1 = document.createElement('th');
+        var th2 = document.createElement('th');
+        var th3 = document.createElement('th');
+        th1.textContent = 'name';
+        th2.textContent = 'country';
+        th3.textContent = 'gender';
+        th1.style = 'width:40%;';
+        th2.style = 'width:30%;';
+        th3.style = 'width:30%;';
+        tr.appendChild(th1);
+        tr.appendChild(th2);
+        tr.appendChild(th3);
+        thead.appendChild(tr);
+      table.appendChild(thead);
 
-      var tr = document.createElement('tr');
-      var td = document.createElement('td');
-      td.textContent = '鈴木 一郎';
-      tr.appendChild(td);
-      var td = document.createElement('td');
-      td.textContent = 'Japan';
-      tr.appendChild(td);
-      var td = document.createElement('td');
-      td.textContent = 'male';
-      tr.appendChild(td);
-      table.appendChild(tr);
+      var tbody = document.createElement('tbody');
+        var tr = document.createElement('tr');
+          var td = document.createElement('td');
+          td.textContent = '鈴木 一郎';
+          tr.appendChild(td);
+          var td = document.createElement('td');
+          td.textContent = 'Japan';
+          tr.appendChild(td);
+          var td = document.createElement('td');
+          td.textContent = 'male';
+          tr.appendChild(td);
+        tbody.appendChild(tr);
 
-      var tr = document.createElement('tr');
-      var td = document.createElement('td');
-      td.textContent = '佐藤 次郎';
-      tr.appendChild(td);
-      var td = document.createElement('td');
-      td.textContent = 'Japan';
-      tr.appendChild(td);
-      var td = document.createElement('td');
-      td.textContent = 'male';
-      tr.appendChild(td);
-      table.appendChild(tr);
+        var tr = document.createElement('tr');
+          var td = document.createElement('td');
+          td.textContent = '佐藤 次郎';
+          tr.appendChild(td);
+          var td = document.createElement('td');
+          td.textContent = 'Japan';
+          tr.appendChild(td);
+          var td = document.createElement('td');
+          td.textContent = 'male';
+          tr.appendChild(td);
+        tbody.appendChild(tr);
 
-      var tr = document.createElement('tr');
-      var td = document.createElement('td');
-      td.textContent = '田中 花子';
-      tr.appendChild(td);
-      var td = document.createElement('td');
-      td.textContent = 'Japan';
-      tr.appendChild(td);
-      var td = document.createElement('td');
-      td.textContent = 'female';
-      tr.appendChild(td);
-      table.appendChild(tr);
+        var tr = document.createElement('tr');
+          var td = document.createElement('td');
+          td.textContent = '田中 花子';
+          tr.appendChild(td);
+          var td = document.createElement('td');
+          td.textContent = 'Japan';
+          tr.appendChild(td);
+          var td = document.createElement('td');
+          td.textContent = 'female';
+          tr.appendChild(td);
+        tbody.appendChild(tr);
 
-      var tr = document.createElement('tr');
-      var td = document.createElement('td');
-      td.textContent = '前川 雄二';
-      tr.appendChild(td);
-      var td = document.createElement('td');
-      td.textContent = 'Japan';
-      tr.appendChild(td);
-      var td = document.createElement('td');
-      td.textContent = 'male';
-      tr.appendChild(td);
-      table.appendChild(tr);
+        var tr = document.createElement('tr');
+          var td = document.createElement('td');
+          td.textContent = '前川 雄二';
+          tr.appendChild(td);
+          var td = document.createElement('td');
+          td.textContent = 'Japan';
+          tr.appendChild(td);
+          var td = document.createElement('td');
+          td.textContent = 'male';
+          tr.appendChild(td);
+        tbody.appendChild(tr);
 
-      var tr = document.createElement('tr');
-      var td = document.createElement('td');
-      td.textContent = 'jhon Smith';
-      tr.appendChild(td);
-      var td = document.createElement('td');
-      td.textContent = 'America';
-      tr.appendChild(td);
-      var td = document.createElement('td');
-      td.textContent = 'male';
-      tr.appendChild(td);
-      table.appendChild(tr);
+        var tr = document.createElement('tr');
+          var td = document.createElement('td');
+          td.textContent = 'jhon Smith';
+          tr.appendChild(td);
+          var td = document.createElement('td');
+          td.textContent = 'America';
+          tr.appendChild(td);
+          var td = document.createElement('td');
+          td.textContent = 'male';
+          tr.appendChild(td);
+        tbody.appendChild(tr);
 
-      var tr = document.createElement('tr');
-      var td = document.createElement('td');
-      td.textContent = 'Kitty Williams';
-      tr.appendChild(td);
-      var td = document.createElement('td');
-      td.textContent = 'America';
-      tr.appendChild(td);
-      var td = document.createElement('td');
-      td.textContent = 'female';
-      tr.appendChild(td);
-      table.appendChild(tr);
-
+        var tr = document.createElement('tr');
+          var td = document.createElement('td');
+          td.textContent = 'Kitty Williams';
+          tr.appendChild(td);
+          var td = document.createElement('td');
+          td.textContent = 'America';
+          tr.appendChild(td);
+          var td = document.createElement('td');
+          td.textContent = 'female';
+          tr.appendChild(td);
+        tbody.appendChild(tr);
+      table.appendChild(tbody);
       document.getElementById('maintable').appendChild(table);
     </script>
     <!-- 検索機能 -->
     <script language="javascript" type="text/javascript">
-    var page = 1;
-    var displayrows = 2;// １ページ当たり表示する行の数(後でGUIオブジェクトを追加してもよい)
-
     function draw() {
-
-      var input, filter, table, tr, td, i;
-      input = document.getElementById("mylist");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("maintable");
-      tr = table.getElementsByTagName("tr");
-      lastpage.innerHTML= (tr.length - 1) / displayrows;
-      currentpage.innerHTML=page;
-      var viewcnt = displayrows;
+      var input, table, tr, td, i;
+      var Lines=5;
+      
+      input = document.getElementById("mylist").value.toUpperCase();
+      Tgt = document.getElementById("maintable").getElementsByTagName("table").table;
+      
+      tr = Tgt.getElementsByTagName("tr");
       for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[0];
         if (td) {
-          if (td.innerHTML.toUpperCase().indexOf(filter) > -1 && viewcnt > 0 && i > (page-1)*displayrows) {
+          if (td.innerHTML.toUpperCase().indexOf(input) > -1 ) {
             tr[i].style.display = "";
-            viewcnt --;
           } else {
             tr[i].style.display = "none";
           }
         }
       }
-    }
-    function prevbtn(){
-      if (page > 1) {
-        page--;
-        draw();
-      }    }
-    function nextbtn(){
-      table = document.getElementById("maintable");
-      tr = table.getElementsByTagName("tr");
-      if (page < (tr.length - 1) /displayrows) {
-        page++;
-        draw();
+
+      var ThdHeight = Tgt.tHead.offsetHeight;
+      var RowHeight=Tgt.rows[0].offsetHeight;
+      var TbyHeight = Tgt.rows[1].offsetHeight;
+
+      for (var j=0; j<Tgt.rows[0].cells.length; j++) {
+        var cellWidth = Tgt.rows[0].cells[j].offsetWidth;
+        Tgt.rows[0].cells[j].width = cellWidth +'px';
+        Tgt.rows[1].cells[j].width = cellWidth +'px';
       }
+
+      var ThdWidth=Tgt.tHead.offsetWidth+2; //表の幅
+
+      Tgt.rows[0].style.position = 'absolute';//絶対位置
+      Tgt.rows[0].style.left = '0px';
+      Tgt.rows[0].style.top = '0px';
+      /* テーブルを囲む外側の 'div'要素 生成 */
+      var outD=document.createElement('div');
+      outD.id='outDiv';// ID名をつける
+
+      outD.style.position='relative'; // 相対位置
+      outD.style.paddingTop=ThdHeight+'px'; // 外枠の上余白
+      outD.style.width=(ThdWidth+18)+'px';  // 表の幅＋スクロールバーの幅
+
+      var Tgtparent=Tgt.parentNode; // 親ノード
+      Tgtparent.insertBefore(outD,Tgt); // outDをテーブルの外側に挿入
+
+      /* テーブルを入れる内側の 'div'要素 生成 */
+      var inD=document.createElement('div');
+      inD.style.height =(RowHeight*Lines)+(Lines*2)+'px'; // 内枠の高さ,表示行数
+      inD.style.overflow = 'auto'; // スクロールバー表示
+
+      inD.appendChild(Tgt); // テーブル 'sclTbl'を inD の中に入れる
+      d=document.getElementById('outDiv');
+      d.appendChild(inD); // 'inD' を 'outD' の内側に入れる
+
+
     }
     window.onload = draw();
     </script>
